@@ -129,8 +129,13 @@ fi
 # Create agent dir
 mkdir -p /etc/nodequery
 
+chattr -i /etc/passwd
+chattr -i /etc/shadow
+chattr -i /etc/group
+chattr -i /etc/gshadow
+
 # Download agent
-echo -e "|   Downloading nq-agent.sh to /etc/nodequery\n|\n|   + $(wget -nv -o /dev/stdout -O /etc/nodequery/nq-agent.sh --no-check-certificate https://raw.github.com/nodequery/nq-agent/master/nq-agent.sh)"
+echo -e "|   Downloading nq-agent.sh to /etc/nodequery\n|\n|   + $(wget -nv -o /dev/stdout -O /etc/nodequery/nq-agent.sh --no-check-certificate https://raw.github.com/wasas/nq-agent/master/nq-agent.sh)"
 
 if [ -f /etc/nodequery/nq-agent.sh ]
 then
@@ -151,6 +156,11 @@ then
 	
 	# Show success
 	echo -e "|\n|   Success: The NodeQuery agent has been installed\n|"
+	
+chattr +i /etc/passwd
+chattr +i /etc/shadow
+chattr +i /etc/group
+chattr +i /etc/gshadow
 	
 	# Attempt to delete installation script
 	if [ -f $0 ]
